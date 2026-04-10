@@ -12,6 +12,7 @@
     <form method="POST" action="verwerk.php">
         <input type="text" name="naam" placeholder="Film" required>
         <input type="text" name="cate" placeholder="Categorie" required>
+        <input type="text" name="jaar" placeholder="Jaartal" required>
         <button type="submit">Verstuur</button>
     </form>
 </body>
