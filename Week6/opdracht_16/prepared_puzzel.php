@@ -28,4 +28,3 @@ $stmt->execute([
  
 echo "Insert gelukt (als je geen error ziet).";
 ?>
- 
