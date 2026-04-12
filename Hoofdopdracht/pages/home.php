@@ -1,35 +1,38 @@
-<?php include "../includes/nav.php"; ?> 
-
+<?php include "../includes/nav.php"; ?>
 
 <?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "p3_app";
 
-$films = [
-["title" => "Zootopia 2",
-"creator" => "Walt Disney Animation Studios",
-"status" => "Nog niet gekeken",
-],
-["title" => "Superman",
-"creator" => "James Gunn",
-"status" => "Afgekeken",
-]
+try {
+    $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
 
-];
+$films = $pdo->prepare("SELECT * FROM app");
+$films->execute();
+$bakje_met_films = $films->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home</title>
 </head>
 <body>
     <h1>Films</h1>
-    <h2><?= $films[0]["title"]; ?></h2>
-    <p><?= $films[0]["creator"]; ?></p>
-    <p><?= $films[0]["status"]; ?></p>
-    <h2><?= $films[1]["title"]; ?></h2>
-    <p><?= $films[1]["creator"]; ?></p>
-    <p><?= $films[1]["status"]; ?></p>
-    <h3><?php include "../includes/footer.php"; ?></h3>
+    <?php foreach ($bakje_met_films as $film): ?>
+        <h2><?php echo htmlspecialchars($film["titel"]); ?></h2>
+        <p>Jaartal: <?php echo htmlspecialchars($film["jaartal"]); ?></p>
+        <p>Status: <?php echo htmlspecialchars($film["status"]); ?></p>
+    <?php endforeach; ?>
+
+    <?php include "../includes/footer.php"; ?>
 </body>
 </html>

@@ -1,27 +1,47 @@
 <?php
-    if (isset($_POST['naam']) && isset($_POST['cate']) && isset($_POST['jaar'])){
-        $naam = $_POST['naam'];
-        $cate = $_POST['cate'];
-        $jaar = $_POST['jaar'];
+if (isset($_POST['naam']) && isset($_POST['cate']) && isset($_POST['jaar'])) {
+    $titel = $_POST['naam'];
+    $status = $_POST['cate'];
+    $jaartal = $_POST['jaar'];
 
-        } if (strlen($naam) < 3) {
-            echo "<a href='toevoegen.php'>Filmnaam moet minimaal 3 tekens bevatten.</a>";
-        } elseif (strlen($naam) > 50) {
-            echo "<a href='toevoegen.php'>Filmnaam mag maximaal 50 tekens bevatten.</a>";
+    if (strlen($titel) < 3) {
+        echo "<p>Filmnaam moet minimaal 3 tekens bevatten.</p>";
+        echo "<a href='toevoegen.php'>Ga terug</a>";
+    } elseif (strlen($titel) > 50) {
+        echo "<p>Filmnaam mag maximaal 50 tekens bevatten.</p>";
+        echo "<a href='toevoegen.php'>Ga terug</a>";
+    } elseif (strlen($status) < 3) {
+        echo "<p>Status moet minimaal 3 tekens bevatten.</p>";
+        echo "<a href='toevoegen.php'>Ga terug</a>";
+    } elseif (strlen($status) > 50) {
+        echo "<p>Status mag maximaal 50 tekens bevatten.</p>";
+        echo "<a href='toevoegen.php'>Ga terug</a>";
+    } elseif (!is_numeric($jaartal)) {
+        echo "<p>Jaartal moet een getal zijn.</p>";
+        echo "<a href='toevoegen.php'>Ga terug</a>";
+    } else {
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "p3_app";
 
-        } elseif (strlen($cate) < 3) {
-            echo "<a href='toevoegen.php'>Categorie moet minimaal 3 tekens bevatten.</a>";
-        } elseif (strlen($cate) > 50) {
-            echo "<a href='toevoegen.php'>Categorie mag maximaal 50 tekens bevatten.</a>";
-
-        } elseif (!is_numeric($jaar)) {
-            echo "<a href='toevoegen.php'>Jaartal moet een getal zijn.</a>";
-
-        } else {
-            echo "<h1>Item succesvol ontvangen </h1>";
-            echo "<p>".htmlspecialchars($naam)." valt onder de categorie" .htmlspecialchars ($cate). "</p>";
-            echo "<p>Jaartal:".htmlspecialchars($jaar)."</p>";
-            echo '<a href="toevoegen.php">Terug naar toevoegen</a> <br>';
-            echo '<a href="home.php">Terug naar home</a>';
+        try {
+            $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch(PDOException $e) {
+            echo "Connection failed: " . $e->getMessage();
         }
+
+        $sql = "INSERT INTO app (titel, jaartal, status) VALUES (:titel, :jaartal, :status)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            ":titel" => $titel,
+            ":jaartal" => $jaartal,
+            ":status" => $status
+        ]);
+
+        header("Location: home.php");
+        exit();
+    }
+}
 ?>

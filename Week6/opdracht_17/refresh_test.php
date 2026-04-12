@@ -17,8 +17,8 @@ if (isset($_POST["titel"])) {
         ":titel" => $titel
     ]);
 
-    header("Location: refresh_test.php");
-    exit();
+    // header("Location: refresh_test.php");
+    // exit();
 }
 ?>
 <!DOCTYPE html>
