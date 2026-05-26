@@ -7,16 +7,16 @@ if (isset($_POST['naam']) && isset($_POST['cate']) && isset($_POST['jaar'])) {
     if (strlen($titel) < 3) {
         echo "<p>Filmnaam moet minimaal 3 tekens bevatten.</p>";
         echo "<a href='toevoegen.php'>Ga terug</a>";
-    } elseif (strlen($titel) > 50) {
+    } else if (strlen($titel) > 50) {
         echo "<p>Filmnaam mag maximaal 50 tekens bevatten.</p>";
         echo "<a href='toevoegen.php'>Ga terug</a>";
-    } elseif (strlen($status) < 3) {
+    } else if (strlen($status) < 3) {
         echo "<p>Status moet minimaal 3 tekens bevatten.</p>";
         echo "<a href='toevoegen.php'>Ga terug</a>";
-    } elseif (strlen($status) > 50) {
+    } else if (strlen($status) > 50) {
         echo "<p>Status mag maximaal 50 tekens bevatten.</p>";
         echo "<a href='toevoegen.php'>Ga terug</a>";
-    } elseif (!is_numeric($jaartal)) {
+    } else if (!is_numeric($jaartal)) {
         echo "<p>Jaartal moet een getal zijn.</p>";
         echo "<a href='toevoegen.php'>Ga terug</a>";
     } else {

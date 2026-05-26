@@ -14,5 +14,7 @@
         echo "$naam heeft $aantal";
     }
     ?>
+    <!-- //Als ik required verwijderd komt de hele naam en nummer niet// -->
 </body>
 </html>
+

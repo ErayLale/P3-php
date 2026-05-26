@@ -21,5 +21,5 @@ foreach($bakje_met_films as $film) {
     echo $film["titel"] . "<br>";
     echo $film["jaartal"] . "<br>";
     echo $film["status"] . "<br><br>";
-} 
+}
 ?>
